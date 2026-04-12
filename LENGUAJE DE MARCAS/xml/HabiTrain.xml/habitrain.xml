@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HabiTrain xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="habitrain.xsd">
+    <Usuarios>
+        <Usuario id="1">
+            <Nombre>Alex</Nombre>
+            <Apellido>García</Apellido>
+            <Email>ale1@email.com</Email>
+            <Habitos>
+                <Habito id="1">
+                    <Nombre>Beber agua (2L)</Nombre>
+                    <MetaDiaria>2</MetaDiaria>
+                    <Registros>
+                        <Registro>
+                            <Fecha>2026-04-01</Fecha>
+                            <Estado>COMPLETADO</Estado>
+                        </Registro>
+                        <Registro>
+                            <Fecha>2026-04-02</Fecha>
+                            <Estado>COMPLETADO</Estado>
+                        </Registro>
+                        <Registro>
+                            <Fecha>2026-04-03</Fecha>
+                            <Estado>FALLIDO</Estado>
+                        </Registro>
+                    </Registros>
+                </Habito>
+                <Habito id="2">
+                    <Nombre>Caminar pasos</Nombre>
+                    <MetaDiaria>10000</MetaDiaria>
+                </Habito>
+            </Habitos>
+            <Entrenamientos>
+                <Entrenamiento id="1">
+                    <Nombre>Full Body - Alex</Nombre>
+                    <Ejercicios>
+                        <Ejercicio>
+                            <Nombre>Sentadilla Búlgara</Nombre>
+                            <Series>4</Series>
+                            <Repeticiones>12</Repeticiones>
+                            <GrupoMuscular>Pierna</GrupoMuscular>
+                        </Ejercicio>
+                        <Ejercicio>
+                            <Nombre>Dominadas</Nombre>
+                            <Series>3</Series>
+                            <Repeticiones>10</Repeticiones>
+                            <GrupoMuscular>Espalda</GrupoMuscular>
+                        </Ejercicio>
+                    </Ejercicios>
+                </Entrenamiento>
+            </Entrenamientos>
+        </Usuario>
+
+        <Usuario id="2">
+            <Nombre>Elena</Nombre>
+            <Apellido>Pérez</Apellido>
+            <Email>elen@email.com</Email>
+            <Habitos>
+                <Habito id="3">
+                    <Nombre>Leer páginas</Nombre>
+                    <MetaDiaria>20</MetaDiaria>
+                </Habito>
+            </Habitos>
+        </Usuario>
+
+        <Usuario id="3">
+            <Nombre>Nuria</Nombre>
+            <Apellido>Segarra</Apellido>
+            <Email>nuri@email.com</Email>
+            <Habitos>
+                <Habito id="4">
+                    <Nombre>Pasos diarios</Nombre>
+                    <MetaDiaria>10000</MetaDiaria>
+                </Habito>
+            </Habitos>
+        </Usuario>
+
+        <Usuario id="4">
+            <Nombre>Carol</Nombre>
+            <Apellido>Hernández</Apellido>
+            <Email>caro2@email.com</Email>
+        </Usuario>
+
+        <Usuario id="5">
+            <Nombre>David</Nombre>
+            <Apellido>López</Apellido>
+            <Email>david3@email.com</Email>
+        </Usuario>
+
+        <Usuario id="6">
+            <Nombre>Laura</Nombre>
+            <Apellido>Martín</Apellido>
+            <Email>lauri@email.com</Email>
+        </Usuario>
+    </Usuarios>
+</HabiTrain>

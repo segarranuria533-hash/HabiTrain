@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="HabiTrain">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="Usuarios">
+                    <xs:complexType>
+                        <xs:sequence>
+
+                            <xs:element name="Usuario" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+
+                                        <xs:element name="Nombre" type="xs:string"/>
+                                        <xs:element name="Apellido" type="xs:string"/>
+                                        <xs:element name="Email" type="xs:string"/>
+
+                                        
+                                        <xs:element name="Habitos" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:sequence>
+
+                                                    <xs:element name="Habito" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+
+                                                                <xs:element name="Nombre" type="xs:string"/>
+                                                                <xs:element name="MetaDiaria" type="xs:int"/>
+
+                                                            
+                                                                <xs:element name="Registros" minOccurs="0">
+                                                                    <xs:complexType>
+                                                                        <xs:sequence>
+
+                                                                            <xs:element name="Registro" maxOccurs="unbounded">
+                                                                                <xs:complexType>
+                                                                                    <xs:sequence>
+
+                                                                                        <xs:element name="Fecha" type="xs:date"/>
+
+                                                                                        <xs:element name="Estado">
+                                                                                            <xs:simpleType>
+                                                                                                <xs:restriction base="xs:string">
+                                                                                                    <xs:enumeration value="COMPLETADO"/>
+                                                                                                    <xs:enumeration value="PENDIENTE"/>
+                                                                                                    <xs:enumeration value="FALLIDO"/>
+                                                                                                </xs:restriction>
+                                                                                            </xs:simpleType>
+                                                                                        </xs:element>
+
+                                                                                    </xs:sequence>
+                                                                                </xs:complexType>
+                                                                            </xs:element>
+
+                                                                        </xs:sequence>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+
+                                                            </xs:sequence>
+                                                            <xs:attribute name="id" type="xs:int" use="required"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+
+                                        
+                                        <xs:element name="Entrenamientos" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:sequence>
+
+                                                    <xs:element name="Entrenamiento" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+
+                                                                <xs:element name="Nombre" type="xs:string"/>
+
+                                                                
+                                                                <xs:element name="Ejercicios">
+                                                                    <xs:complexType>
+                                                                        <xs:sequence>
+
+                                                                            <xs:element name="Ejercicio" maxOccurs="unbounded">
+                                                                                <xs:complexType>
+                                                                                    <xs:sequence>
+
+                                                                                        <xs:element name="Nombre" type="xs:string"/>
+                                                                                        <xs:element name="Series" type="xs:int"/>
+                                                                                        <xs:element name="Repeticiones" type="xs:int"/>
+                                                                                        <xs:element name="GrupoMuscular" type="xs:string"/>
+
+                                                                                    </xs:sequence>
+                                                                                </xs:complexType>
+                                                                            </xs:element>
+
+                                                                        </xs:sequence>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+
+                                                            </xs:sequence>
+
+                                                            <xs:attribute name="id" type="xs:int" use="required"/>
+
+                                                        </xs:complexType>
+                                                    </xs:element>
+
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+
+                                    </xs:sequence>
+
+                                    <xs:attribute name="id" type="xs:int" use="required"/>
+
+                                </xs:complexType>
+                            </xs:element>
+
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
