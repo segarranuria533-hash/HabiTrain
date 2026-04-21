@@ -7,7 +7,7 @@ import java.sql.*;
 public class RegistroHabitos {
    public static void registrar(int idHabitos,String estado){
        String sql= "INSERT INTO registro_habitos(id_habitos,fecha,estado) VALUES(?,?,?)";
-       try (Connection connection = Conexion.conectar();
+       try (Connection connection = Conexion.getConectar();
             PreparedStatement ps = connection.prepareStatement(sql)) {
            Date fecha= new Date(System.currentTimeMillis());
            ps.setInt(1,idHabitos);
@@ -27,7 +27,7 @@ public class RegistroHabitos {
        String sql="SELECT r.id_registro_habitos, h.nombre, r.fecha, r.estado " +
                "FROM Registro_Habitos r " +
                "JOIN Habitos h ON r.id_habitos = h.id_habitos";
-        try (Connection connection = Conexion.conectar();
+        try (Connection connection = Conexion.getConectar();
              Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             System.out.println("\n---HISTORIAL DE PROGRESO");

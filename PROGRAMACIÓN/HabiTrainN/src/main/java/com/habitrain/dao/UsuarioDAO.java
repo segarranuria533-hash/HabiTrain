@@ -7,7 +7,7 @@ import java.sql.*;
 public class UsuarioDAO {
     public static void listar(){
         String sql= "SELECT * FROM Usuario";
-        try (Connection connection = Conexion.conectar();
+        try (Connection connection = Conexion.getConectar();
              Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
 
@@ -25,7 +25,7 @@ public class UsuarioDAO {
     }
     public static void insertar(String nombre, String apellido,String contrasena,String email){
         try{
-            Connection connection= Conexion.conectar();
+            Connection connection= Conexion.getConectar();
             String sql="INSERT INTO Usuario(nombre,apellido,contrasena,email)VALUES(?,?,?,?)";
             PreparedStatement ps= connection.prepareStatement(sql);
             ps.setString(1,nombre);
@@ -42,7 +42,7 @@ public class UsuarioDAO {
     }
     public static void eliminar (int id){
         try {
-            Connection connection=Conexion.conectar();
+            Connection connection=Conexion.getConectar();
             String sql="DELETE FROM Usuario WHERE id_usuario=?";
             PreparedStatement ps=connection.prepareStatement(sql);
             ps.setInt(1, id);

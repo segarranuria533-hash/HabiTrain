@@ -1,6 +1,10 @@
 package com.habitrain.model;
 
-public class Usuario {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+class Usuario {
     private  int id;
     private String nombre;
     private String apellido;

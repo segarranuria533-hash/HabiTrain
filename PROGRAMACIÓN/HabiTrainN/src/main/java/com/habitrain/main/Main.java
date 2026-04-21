@@ -3,11 +3,15 @@ package com.habitrain.main;
 import com.habitrain.dao.HabitosDAO;
 import com.habitrain.dao.RegistroHabitos;
 import com.habitrain.dao.UsuarioDAO;
+import com.habitrain.database.Conexion;
 
+import java.sql.Connection;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        Connection connection = Conexion.getConectar();
         Scanner scanner=new Scanner(System.in);
         int op;
         do {

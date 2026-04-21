@@ -12,7 +12,7 @@ public class HabitosDAO {
     public static void insertar(int idUsuario, String nombre,int meta_diaria){
         String sql="INSERT INTO habitos(id_usuario, nombre,meta_diaria)VALUES (?,?,?)";
         try {
-            Connection connection= Conexion.conectar();
+            Connection connection= Conexion.getConectar();
             PreparedStatement ps=connection.prepareStatement(sql);
             ps.setInt(1,idUsuario);
             ps.setString(2,nombre);
@@ -30,7 +30,7 @@ public class HabitosDAO {
     }
     public static void listarporUsuario(int idUsuario){
         String sql= "SELECT * FROM  Habitos WHERE id_usuario =?";
-        try (Connection connection = Conexion.conectar();
+        try (Connection connection = Conexion.getConectar();
              PreparedStatement ps = connection.prepareStatement(sql)){;
             ps.setInt(1,idUsuario);
             ResultSet rs= ps.executeQuery();
@@ -53,7 +53,7 @@ public class HabitosDAO {
     }
     public  static void eliminar(int idHabitos){
         String sql= "DELETE FROM Habitos WHERE id_habitos=?";
-        try (Connection connection = Conexion.conectar();
+        try (Connection connection = Conexion.getConectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1,idHabitos);
