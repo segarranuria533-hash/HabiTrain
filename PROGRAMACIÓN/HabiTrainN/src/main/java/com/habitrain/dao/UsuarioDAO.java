@@ -2,18 +2,14 @@ package com.habitrain.dao;
 
 import com.habitrain.database.Conexion;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class UsuarioDAO {
     public static void listar(){
-        try {
-            Connection connection= Conexion.conectar();
-            String sql= "SELECT * FROM Usuario";
-            Statement st=connection.createStatement();
-            ResultSet rs= st.executeQuery(sql);
+        String sql= "SELECT * FROM Usuario";
+        try (Connection connection = Conexion.conectar();
+             Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()){
                 System.out.println(
@@ -59,7 +55,7 @@ public class UsuarioDAO {
             }
 
 
-        }catch (Exception e){
+        }catch (SQLException e){
             e.printStackTrace();
 
         }
