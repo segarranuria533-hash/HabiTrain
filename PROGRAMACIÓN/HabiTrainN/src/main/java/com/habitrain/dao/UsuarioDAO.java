@@ -14,12 +14,12 @@ public class UsuarioDAO {
             while (rs.next()){
                 System.out.println(
                         rs.getInt("id_usuario")+"-"+
-                                rs.getString("nombre")+""+
+                                rs.getString("nombre")+ "" +
                                 rs.getString("apellido")
                 );
             }
 
-        }catch (Exception e){
+        }catch (SQLException e){
             e.printStackTrace();
         }
     }
@@ -35,7 +35,7 @@ public class UsuarioDAO {
             ps.executeUpdate();
             System.out.println("Usuario insertado");
 
-        }catch (Exception e){
+        }catch (SQLException e){
             e.printStackTrace();
 
         }

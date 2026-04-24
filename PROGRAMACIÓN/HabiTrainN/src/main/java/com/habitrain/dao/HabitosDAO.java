@@ -1,25 +1,27 @@
 package com.habitrain.dao;
 
 import com.habitrain.database.Conexion;
+import com.habitrain.model.Habitos;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HabitosDAO {
-    public static void insertar(int idUsuario, String nombre,int meta_diaria){
+    public static void insertar(int id_usuario, String nombre,int meta_diaria){
         String sql="INSERT INTO habitos(id_usuario, nombre,meta_diaria)VALUES (?,?,?)";
-        try {
-            Connection connection= Conexion.getConectar();
-            PreparedStatement ps=connection.prepareStatement(sql);
-            ps.setInt(1,idUsuario);
+        try (Connection connection = Conexion.getConectar();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1,id_usuario);
             ps.setString(2,nombre);
             ps.setInt(3,meta_diaria);
 
             ps.executeUpdate();
-            System.out.println("Hábito"+nombre+"'insertado correctamente'");
+            System.out.println("Hábito"+ nombre +"'insertado correctamente'");
 
 
         }catch (SQLException e){
@@ -28,22 +30,19 @@ public class HabitosDAO {
 
         }
     }
-    public static void listarporUsuario(int idUsuario){
-        String sql= "SELECT * FROM  Habitos WHERE id_usuario =?";
+    public static void listarPorUsuario(int id_usuario) {
+        String sql = "SELECT * FROM Habitos WHERE id_usuario = ?";
         try (Connection connection = Conexion.getConectar();
-             PreparedStatement ps = connection.prepareStatement(sql)){;
-            ps.setInt(1,idUsuario);
+             PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1,id_usuario);
             ResultSet rs= ps.executeQuery();
-
-            System.out.println("\n--- LISTA DE HÁBITOS---");
+System.out.println("\n--- HÁBITOS DEL USUARIO");
             while (rs.next()){
-                System.out.println("ID:"+ rs.getInt("id_habitos") +
-                                "| Nombre: " + rs.getString("nombre")+
-                                "|Meta diaria: " + rs.getInt("meta_diaria"));
-
-
-
-
+                System.out.println(
+                        "ID: " + rs.getInt("id_habitos") +
+                                " | Nombre: " + rs.getString("nombre") +
+                                " | Meta diaria: " + rs.getInt("meta_diaria")
+                );
             }
 
          }catch (SQLException e){

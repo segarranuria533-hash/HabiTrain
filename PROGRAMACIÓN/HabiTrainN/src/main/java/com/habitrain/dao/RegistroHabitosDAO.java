@@ -4,15 +4,17 @@ import com.habitrain.database.Conexion;
 
 import java.sql.*;
 
-public class RegistroHabitos {
-   public static void registrar(int idHabitos,String estado){
-       String sql= "INSERT INTO registro_habitos(id_habitos,fecha,estado) VALUES(?,?,?)";
+public class RegistroHabitosDAO {
+   public static void registrar(int idHabitos,String estado, int id_usuario){
+       String sql = "INSERT INTO Registro_Habitos(id_habitos, fecha, estado) VALUES(?,?,?)";
+
        try (Connection connection = Conexion.getConectar();
             PreparedStatement ps = connection.prepareStatement(sql)) {
-           Date fecha= new Date(System.currentTimeMillis());
+           java.sql.Date fecha= new java.sql.Date(System.currentTimeMillis());
            ps.setInt(1,idHabitos);
            ps.setDate(2, fecha);
            ps.setString(3,estado);
+
         ps.executeUpdate();
         System.out.println("Registro de hábito guardado como" +estado);
 
@@ -41,7 +43,7 @@ public class RegistroHabitos {
 
        }catch (SQLException e){
     e.printStackTrace();
-    System.out.println("error al listar registrs"+ e.getMessage());
+    System.out.println("error al listar registros: "+ e.getMessage());
         }
     }
 }

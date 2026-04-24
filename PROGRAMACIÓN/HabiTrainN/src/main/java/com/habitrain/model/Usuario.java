@@ -5,23 +5,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 class Usuario {
-    private  int id;
+    private  int id_usuario;
     private String nombre;
     private String apellido;
     public Usuario(){}
 
     public Usuario(int id, String nombre, String apellido){
-        this.id=id;
+        this.id_usuario=id_usuario;
         this.nombre=nombre;
         this.apellido=apellido;
     }
 
     public int getId() {
-        return id;
+        return id_usuario;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id_usuario = id_usuario;
     }
 
     public String getNombre() {
@@ -46,7 +46,7 @@ class Usuario {
     }
     @Override
     public  String toString(){
-        return  id +"-"+nombre+""+apellido;
+        return  id_usuario +"-"+nombre+""+apellido;
     }
 
 }
