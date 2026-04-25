@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-class Usuario {
+public class Usuario {
     private  int id_usuario;
     private String nombre;
     private String apellido;

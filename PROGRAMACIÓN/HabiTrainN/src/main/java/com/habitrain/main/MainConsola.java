@@ -7,8 +7,12 @@ import com.habitrain.model.Ejercicios;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
-
-public class Main {
+import com.habitrain.service.HabitosService;
+import com.habitrain.service.EntrenamientosService;
+import  com.habitrain.service.EjerciciosService;
+import  com.habitrain.service.RegistrosHabitosService;
+import  com.habitrain.service.EntrenamientoEjercicioService;
+public class MainConsola {
     public static void main(String[] args) {
 
         Connection connection = Conexion.getConectar();
@@ -65,17 +69,17 @@ public class Main {
                     System.out.println("Meta diaria: ");
                     int m=scanner.nextInt();
 
-                    HabitosDAO.insertar(idU,h,m);
+                    HabitosService.crearHabito(idU,h,m);
                     break;
                 case 5:
                     System.out.println("id del usuario para ver sus hábitos");
                     int idUver=scanner.nextInt();
-                    HabitosDAO.listarPorUsuario(idUver);
+                    HabitosService.listarPorUsuario(idUver);
                     break;
                 case 6:
                     System.out.println("ID del hábito a eliminar");
                     int idH=scanner.nextInt();
-                    HabitosDAO.eliminar(idH);
+                    HabitosService.eliminar(idH);
                     break;
                 case 7:
                     System.out.println("ID Usuario:  ");
@@ -90,11 +94,11 @@ public class Main {
                         case 3-> "FALLIDO";
                         default -> "pendiente";
                     };
-                    RegistroHabitosDAO.registrar(idHreg,estado,idUser);
+                    RegistrosHabitosService.registrar(idHreg,estado,idUser);
                     break;
 
                 case 8:
-                    RegistroHabitosDAO.listar();
+                    RegistrosHabitosService.listar();
                     break;
                 case 9:
                     System.out.println("ID usuario: ");
@@ -102,13 +106,17 @@ public class Main {
                     scanner.nextLine();
                     System.out.println("Nombre del entrenamiento: ");
                     String nombreEntre=scanner.nextLine();
-                    EntrenamientoDAO.insertar(idUserEntre,nombreEntre);
+                    EntrenamientosService.crearEntrenamiento(idUserEntre,nombreEntre);
                     break;
 
                 case 10:
                     System.out.println("ID usuario:");
                     int idUserList= scanner.nextInt();
-                    var listaEntr= EntrenamientoDAO.listarPorUsuario(idUserList);
+                    var listaEntr= EntrenamientosService.listarPorUsuario(idUserList);
+                    if (listaEntr.isEmpty()){
+                        System.out.println("NO hay entrenamientos");
+                        break;
+                    }
                     for (var e1:listaEntr){
                         System.out.println(e1);
                     }
@@ -120,18 +128,23 @@ public class Main {
                     String nomEj=scanner.nextLine();
                     System.out.println("Grupo muscular: ");
                     String grupo=scanner.nextLine();
-                    EjerciciosDAO.insertar(nomEj,grupo);
+                    EjerciciosService.insertar(nomEj,grupo);
                     break;
 
                 case 12:
-                    var listaEj= EjerciciosDAO.listar();
+                    var listaEj= EjerciciosService.listar();
                     for (var ej : listaEj){
                         System.out.println(ej);
                     }
                     break;
 
                 case 13:
-                    List<Ejercicios>ejercicios=EjerciciosDAO.listar();
+                    List<Ejercicios>ejercicios=EjerciciosService.listar();
+
+                    if (ejercicios.isEmpty()){
+                        System.out.println("No hay ejercicios");
+                        break;
+                    }
                     System.out.println("\n--EJERCICIOS---");
                     for (Ejercicios ejercicios1 : ejercicios){
                         System.out.println(ejercicios1);
@@ -145,11 +158,11 @@ public class Main {
                     int series= scanner.nextInt();
                     System.out.println("Repeticiones");
                     int reps= scanner.nextInt();
-                    EntrenamientoEjercicioDAO.agregarEjercicio(idEnt,idEj,series,reps);
+                    EntrenamientoEjercicioService.agregar(idEnt,idEj,series,reps);
                     break;
 
                 case 14:
-                    System.out.print("saliendo de HabiTrain... ¡Hasta pronto!");
+                    System.out.print("S aliendo de HabiTrain... ¡Hasta pronto!");
                     break;
 
                 default:
