@@ -14,7 +14,7 @@ public class Habitos {
 
     }
 
-    public int getId() {
+    public int getId_habitos() {
         return id_habitos;
     }
 
