@@ -6,7 +6,8 @@ CREATE TABLE Usuario(
     apellido VARCHAR(100) NOT NULL,
     contrasena VARCHAR(255) NOT NULL,
     email   VARCHAR(100) UNIQUE NOT NULL,
-    fecha_registro  DATETIME  default current_timestamp
+    fecha_registro  DATETIME  default current_timestamp,
+    rol VARCHAR (15) default 'USER'
     );
 
 CREATE TABLE Habitos(
@@ -61,6 +62,11 @@ INSERT INTO Usuario (nombre, apellido, contrasena, email) VALUES
 ('Carol', 'Hernández', '444', 'caro2@email.com'),
 ('David', 'López', '789', 'david3@email.com'),
 ('Laura', 'Martín', '321', 'lauri@email.com');
+
+INSERT INTO Usuario (nombre, apellido, contrasena, email, rol)
+VALUES 
+('Admin', 'Principal', 'admin123', 'admin@habi.com', 'ADMIN'),
+('Super', 'User', 'root456', 'super@habi.com', 'ADMIN');
 
 
 INSERT INTO Habitos (id_usuario, nombre, meta_diaria) VALUES
@@ -139,6 +145,10 @@ VALUES
 SELECT * 
 FROM Habitos
 WHERE id_usuario = 1;
+
+SELECT nombre, email
+FROM Usuario
+WHERE rol = 'ADMIN';
 
 
 SELECT * FROM Entrenamiento_Ejercicio;

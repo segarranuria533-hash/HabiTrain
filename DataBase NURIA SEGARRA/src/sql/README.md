@@ -15,6 +15,8 @@ Usuario:
 Representa a la persona que utiliza la aplicación.
 Es la entidad central del sistema, ya que toda la información está asociada a un usuario.
 
+Incluye un atributo "rol" que permite diferenciar entre usuarios normales (USER) y administradores (ADMIN).
+
 Hábito:
 
 Define una acción que el usuario desea repetir de forma periódica (ej. beber agua, meditar, hacer ejercicio).
