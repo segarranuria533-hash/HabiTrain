@@ -158,6 +158,10 @@ SELECT u.nombre, u.apellido, h.nombre AS habito
 FROM Usuario u
 JOIN Habitos h ON u.id_usuario = h.id_usuario;
 
+UPDATE Usuario
+SET rol = 'ADMIN'
+WHERE id_usuario = 2;
+
 SELECT h.nombre, r.fecha, r.estado
 FROM Registro_Habitos r
 JOIN Habitos h ON r.id_habitos = h.id_habitos;
