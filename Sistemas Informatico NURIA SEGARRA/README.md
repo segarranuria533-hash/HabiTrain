@@ -37,17 +37,75 @@ Se elige Windows por ser el entorno de desarrollo principal y por la facilidad d
  5. Usuarios, permisos y estructura:
 
 - Usuarios del Sistema:
-* Admin: acceso total a la base de datos y archivos
-* Usuario: Solo puede ejecutar la APP
+
+* Administrador
+Acceso total a la aplicación
+gestiona usuarios, datos y configuración
+Puede ver y restaurar copias de seguridad
+*  Usuario 
+Puede crear, editar y consultar sus propios datos
+No puede acceder a configuración del sistema
+No puede gestionar otros usuarios
 
 - Estructura de Carpetas 
 
-src: Contiene el código fuente organizado en paquetes (DAO, Model, Controller).
+src: Contiene el código fuente organizado en paquetes (DAO, Model, Controller, Main, Service ).
 
 xml: Ubicación de los archivos de intercambio de datos (habitrain.xml y habitrain.xsd).
 
-database o sql: Almacena el script de creación de la base de datos para despliegue inicial.
+database : Almacena el script de creación de la base de datos para despliegue inicial.
 
 readme.md: Carpeta donde reside este informe técnico y manuales de usuario.
 
-He establecido un protocolo de copias de seguridad lógicas mediante SQL. El administrador realiza exportaciones manuales semanales utulizando la herramienta phpMyAdmin. (Evidencia en el archivo habitrain.sql)
+Copias de Seguridad: 
+
+He establecido un protocolo de copias de seguridad lógicas mediante SQL. El administrador realiza exportaciones manuales semanales utilizando la herramienta phpMyAdmin. (Evidencia en el archivo habitrain.sql)
+
+6. Mantenimiento 
+Que se debe actualizar: 
+
+- Código fuente: mejoras, corrección de errores y optimización del rendimiento
+- Base de datos: actualización de estructuras, índices y limpieza de datos obsoletos
+- Dependencias/librerías: actualización de frameworks y bibliotecas para mantener la compatibilidad y seguridad
+- Archivos de configuración: ajustes en entornos (producción, desarrollo, pruebas)
+- Sistema de copias de seguridad: verificación de su correcto funcionamiento
+ 
+ Cada cuanto se debe actualizar: 
+
+1. Correcciones de errores: inmediatamente tras su detección
+2. Pequeñas mejoras: de forma mensual o continua
+3. Actualizaciones del sistema o librerías: cada 3–6 meses
+4. Copias de seguridad de la base de datos: semanalmente (mínimo)
+5. Revisión general del sistema: cada 2–3 meses
+ 
+Que se deberia revisar: 
+
+* Funcionamiento correcto de la aplicación web (pantallas y formularios)
+* Estado de la conexión con la base de datos
+* Errores registrados en logs del servidor
+* Integridad de los datos almacenados
+* Correcta validación de archivos XML (habitrain.xml y habitrain.xsd)
+* Seguridad de usuarios y permisos (roles)
+* Rendimiento de consultas SQL y carga de páginas
+
+Qué hacer si falla el sistema:
+
+En caso de fallo o error en la aplicación, se deben seguir estos pasos:
+
+1. Detectar el problema
+- Revisar mensajes de error del navegador o del servidor
+- Identificar si el fallo es de base de datos, código o servidor
+2. Consultar logs del sistema
+- Analizar los registros del servidor web para localizar el error
+3. Comprobar la base de datos
+- Verificar conexión y estado del servicio
+- Revisar posibles errores en consultas SQL
+4. Restaurar copia de seguridad
+- Importar el último archivo .sql disponible
+- Comprobar que los datos se recuperan correctamente
+5. Corregir el error
+- Aplicar cambios en código, configuración o base de datos
+6. Verificar funcionamiento
+- Comprobar que la aplicación vuelve a funcionar correctamente
+7. Registrar la incidencia
+Documentar el fallo y la solución aplicada para futuras referencias
