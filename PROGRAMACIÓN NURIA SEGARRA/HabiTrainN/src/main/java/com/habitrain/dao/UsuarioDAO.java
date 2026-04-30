@@ -1,6 +1,7 @@
 package com.habitrain.dao;
 
 import com.habitrain.database.Conexion;
+import com.habitrain.model.Usuario;
 
 import java.sql.*;
 
@@ -11,11 +12,14 @@ public class UsuarioDAO {
              Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
 
+        System.out.println("\n---LISTA DE USUARIOS---");
             while (rs.next()){
                 System.out.println(
-                        rs.getInt("id_usuario")+"-"+
-                                rs.getString("nombre")+ "" +
-                                rs.getString("apellido")
+                        "ID: " + rs.getInt("id_usuario") +
+                                " | Nombre: " + rs.getString("nombre") +
+                                " " + rs.getString("apellido") +
+                                " | Email: " + rs.getString("email") +
+                                " | Rol: " + rs.getString("rol")
                 );
             }
 
@@ -24,9 +28,10 @@ public class UsuarioDAO {
         }
     }
     public static void insertar(String nombre, String apellido,String contrasena,String email){
+        String sql="INSERT INTO Usuario(nombre,apellido,contrasena,email,rol)VALUES(?,?,?,?,'USER')";
+
         try{
             Connection connection= Conexion.getConectar();
-            String sql="INSERT INTO Usuario(nombre,apellido,contrasena,email)VALUES(?,?,?,?)";
             PreparedStatement ps= connection.prepareStatement(sql);
             ps.setString(1,nombre);
             ps.setString(2,apellido);
@@ -62,4 +67,32 @@ public class UsuarioDAO {
 
         }
     }
+    public static Usuario login(String email,String contrasena){
+        String sql ="SELECT * FROM Usuario WHERE email=? AND contrasena=?";
+
+        try (Connection connection = Conexion.getConectar();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1,email);
+            ps.setString(2,contrasena);
+
+            ResultSet rs=ps.executeQuery();
+             if (rs.next()){
+                 Usuario u=new Usuario();
+                 u.setId_usuario(rs.getInt("id_usuario"));
+                 u.setNombre(rs.getString("nombre"));
+                 u.setApellido(rs.getString("apellido"));
+                 u.setEmail(rs.getString("email"));
+                 u.setContrasena(rs.getString("contrasena"));
+                 u.setRol(rs.getString("rol"));                 return u;
+             }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+
+        }
+        return null;
 }
+}
+
+

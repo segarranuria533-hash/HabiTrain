@@ -1,28 +1,47 @@
 package com.habitrain.main;
 
 import com.habitrain.dao.*;
-import com.habitrain.database.Conexion;
 import com.habitrain.model.Ejercicios;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
+
+import com.habitrain.model.Usuario;
 import com.habitrain.service.HabitosService;
 import com.habitrain.service.EntrenamientosService;
 import  com.habitrain.service.EjerciciosService;
 import  com.habitrain.service.RegistrosHabitosService;
 import  com.habitrain.service.EntrenamientoEjercicioService;
+
 public class MainConsola {
     public static void main(String[] args) {
 
-        Connection connection = Conexion.getConectar();
-        Scanner scanner=new Scanner(System.in);
+       Scanner scanner=new Scanner(System.in);
+       System.out.println("///=====LOGIN HabiTrain====/// ");
+
+       System.out.println("Email:  ");
+       String email= scanner.nextLine();
+       System.out.println("Contraseña:  ");
+       String contra= scanner.nextLine();
+        Usuario usuarioLogueado= UsuarioDAO.login(email,contra);
+
+        if (usuarioLogueado==null){
+            System.out.println("Usuario o contraseña incorrectos");
+            return;
+        }
+        String rolUsuario=  usuarioLogueado.getRol();
+        int idUsuarioLogueado= usuarioLogueado.getId_usuario();
+        System.out.println("Bienvenido" + rolUsuario);
         int op;
         do {
-            System.out.println("\n--HabiTrain: Gestión de Hábitos");
+            System.out.println("\n--HabiTrain----");
+            System.out.println("Usuario: " + rolUsuario);
             System.out.println("1.Ver Usuario");
-            System.out.println("2.Insetar Usuario");
-            System.out.println("3.Elminar Usuario");
+            if  ("ADMIN".equals(rolUsuario)) {
+                System.out.println("2.insertar Usuario");
+                System.out.println("3.Eliminar Usuario");
+            }
+
             System.out.println("4.Crear hábito");
             System.out.println("5.ver hábitos de un Usuario");
             System.out.println("6.Eliminar hábito");
@@ -32,15 +51,23 @@ public class MainConsola {
             System.out.println("10. ver entrenamiento");
             System.out.println("11. Crear ejercicio");
             System.out.println("12.Ver ejercicio");
-            System.out.println("13. Añadir ejercicio o entrenamiento");
+            System.out.println("13. Añadir ejercicio a entrenamiento");
             System.out.println("14.Salir");
             System.out.println("Selecciona una opción: ");
             op=scanner.nextInt();
             switch (op){
                 case 1:
+                    if (!"ADMIN".equals(rolUsuario)){
+                        System.out.println("NO tienes permisos");
+                        break;
+                    }
                     UsuarioDAO.listar();
                     break;
                 case 2:
+                    if (!"ADMIN".equals(rolUsuario)){
+                        System.out.println("no tienes permisos");
+                        break;
+                    }
                     scanner.nextLine();
                     System.out.print("Nombre: ");
                     String n = scanner.nextLine();
@@ -56,25 +83,44 @@ public class MainConsola {
                     break;
 
                 case 3:
+                    if (!"ADMIN".equals(rolUsuario)){
+                        System.out.println("no tienes permisos");
+                        break;
+                    }
                     System.out.print("ID del usuario a eliminar: ");
                     int id = scanner.nextInt();
                     UsuarioDAO.eliminar(id);
                     break;
                 case 4:
-                    System.out.println("ID Usuario: ");
-                    int idU=scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.println("Nombre del hábito:");
-                    String h=scanner.nextLine();
-                    System.out.println("Meta diaria: ");
-                    int m=scanner.nextInt();
 
-                    HabitosService.crearHabito(idU,h,m);
+                    scanner.nextLine();
+
+                    System.out.println("Nombre del hábito:");
+                    String h = scanner.nextLine();
+
+                    System.out.println("Meta diaria:");
+                    int m = scanner.nextInt();
+
+                    int idU;
+
+                    if (!"ADMIN".equals(rolUsuario)) {
+                        System.out.println("ID Usuario:");
+                        idU = scanner.nextInt();
+                    } else {
+                        idU = idUsuarioLogueado;
+                    }
+
+                    HabitosService.crearHabito(idU, h, m);
                     break;
                 case 5:
-                    System.out.println("id del usuario para ver sus hábitos");
-                    int idUver=scanner.nextInt();
-                    HabitosService.listarPorUsuario(idUver);
+                    int idVer;
+                    if ("ADMIN".equals(rolUsuario)) {
+                        System.out.print("ID usuario: ");
+                        idVer = scanner.nextInt();
+                    } else {
+                        idVer = idUsuarioLogueado;
+                    }
+                    HabitosService.listarPorUsuario(idVer);
                     break;
                 case 6:
                     System.out.println("ID del hábito a eliminar");
@@ -82,10 +128,16 @@ public class MainConsola {
                     HabitosService.eliminar(idH);
                     break;
                 case 7:
-                    System.out.println("ID Usuario:  ");
-                    int idUser=scanner.nextInt();
-                    System.out.println("ID del Hábito que has hecho");
-                    int idHreg=scanner.nextInt();
+
+                    int idRegUser;
+                    if ("ADMIN".equals(rolUsuario)){
+                        System.out.println("ID usuario:  ");
+                        idRegUser= scanner.nextInt();
+                    }else{
+                        idRegUser=idUsuarioLogueado;
+                    }
+                    System.out.println("ID Habito:  ");
+                    int idHabito=scanner.nextInt();
                     System.out.println("Estado (1. COMPLETADO, 2.PENDIENTE, 3.FALLIDO)" );
                     int estOp=scanner.nextInt();
                     String estado= switch (estOp){
@@ -94,7 +146,7 @@ public class MainConsola {
                         case 3-> "FALLIDO";
                         default -> "pendiente";
                     };
-                    RegistrosHabitosService.registrar(idHreg,estado,idUser);
+                    RegistrosHabitosService.registrar(idRegUser,estado,idHabito);
                     break;
 
                 case 8:
@@ -132,21 +184,17 @@ public class MainConsola {
                     break;
 
                 case 12:
-                    var listaEj= EjerciciosService.listar();
-                    for (var ej : listaEj){
+                    List<Ejercicios>ejercicios=EjerciciosService.listar();
+                    for (Ejercicios ej:ejercicios){
                         System.out.println(ej);
                     }
                     break;
 
                 case 13:
-                    List<Ejercicios>ejercicios=EjerciciosService.listar();
+                    List<Ejercicios>ejerciciosList=EjerciciosService.listar();
 
-                    if (ejercicios.isEmpty()){
-                        System.out.println("No hay ejercicios");
-                        break;
-                    }
                     System.out.println("\n--EJERCICIOS---");
-                    for (Ejercicios ejercicios1 : ejercicios){
+                    for (Ejercicios ejercicios1 : ejerciciosList){
                         System.out.println(ejercicios1);
 
                     }
@@ -162,7 +210,7 @@ public class MainConsola {
                     break;
 
                 case 14:
-                    System.out.print("S aliendo de HabiTrain... ¡Hasta pronto!");
+                    System.out.print("Saliendo de HabiTrain... ¡Hasta pronto!");
                     break;
 
                 default:
