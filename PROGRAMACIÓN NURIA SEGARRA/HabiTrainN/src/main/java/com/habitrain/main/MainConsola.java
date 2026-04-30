@@ -128,6 +128,7 @@ public class MainConsola {
                     HabitosService.eliminar(idH);
                     break;
                 case 7:
+                    System.out.println("Registrar");
 
                     int idRegUser;
                     if ("ADMIN".equals(rolUsuario)){
@@ -138,6 +139,10 @@ public class MainConsola {
                     }
                     System.out.println("ID Habito:  ");
                     int idHabito=scanner.nextInt();
+                    if (!HabitosDAO.existeParaUsuario(idHabito,idRegUser)){
+                        System.out.println("ERROR: ese hábito no pertenece al usuario");
+                        break;
+                    }
                     System.out.println("Estado (1. COMPLETADO, 2.PENDIENTE, 3.FALLIDO)" );
                     int estOp=scanner.nextInt();
                     String estado= switch (estOp){
@@ -146,7 +151,9 @@ public class MainConsola {
                         case 3-> "FALLIDO";
                         default -> "pendiente";
                     };
-                    RegistrosHabitosService.registrar(idRegUser,estado,idHabito);
+                    System.out.println("ID HABITO " + idHabito);
+                    System.out.println("ID USUARIO: " + idRegUser);
+                    RegistrosHabitosService.registrar(idHabito,estado);
                     break;
 
                 case 8:

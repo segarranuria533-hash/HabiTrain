@@ -5,13 +5,13 @@ import com.habitrain.database.Conexion;
 import java.sql.*;
 
 public class RegistroHabitosDAO {
-   public static void registrar(int idHabitos,String estado, int id_usuario){
-       String sql = "INSERT INTO Registro_Habitos(id_habitos, fecha, estado) VALUES(?,?,?)";
+   public static void registrar(int id_habitos,String estado){
 
+       String sql = "INSERT INTO Registro_Habitos(id_habitos,fecha, estado) VALUES(?,?,?)";
        try (Connection connection = Conexion.getConectar();
             PreparedStatement ps = connection.prepareStatement(sql)) {
            java.sql.Date fecha= new java.sql.Date(System.currentTimeMillis());
-           ps.setInt(1,idHabitos);
+           ps.setInt(1,id_habitos);
            ps.setDate(2, fecha);
            ps.setString(3,estado);
 

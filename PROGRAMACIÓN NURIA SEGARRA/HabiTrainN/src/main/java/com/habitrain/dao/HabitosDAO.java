@@ -30,6 +30,7 @@ public class HabitosDAO {
 
         }
     }
+
     public static void listarPorUsuario(int id_usuario) {
         String sql = "SELECT * FROM Habitos WHERE id_usuario = ?";
         try (Connection connection = Conexion.getConectar();
@@ -49,6 +50,27 @@ System.out.println("\n--- HÁBITOS DEL USUARIO");
             e.printStackTrace();
 
         }
+
+
+    }
+    public static boolean existeParaUsuario(int id_habitos, int id_usuario) {
+
+        String sql = "SELECT 1 FROM Habitos WHERE id_habitos = ? AND id_usuario = ?";
+
+        try (Connection connection = Conexion.getConectar();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, id_habitos);
+            ps.setInt(2, id_usuario);
+
+            ResultSet rs = ps.executeQuery();
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
     public  static void eliminar(int idHabitos){
         String sql= "DELETE FROM Habitos WHERE id_habitos=?";
@@ -61,7 +83,7 @@ System.out.println("\n--- HÁBITOS DEL USUARIO");
                 System.out.println("Habito eliminado");
             }else {
                 System.out.println("No SE ENCONTRO NINGÚN HÁBITO CON ESE ID");
-            }
+            };
 
     }catch (SQLException e){
             System.out.println("Error al eliminar" +e.getMessage()) ;
@@ -69,5 +91,6 @@ System.out.println("\n--- HÁBITOS DEL USUARIO");
         }
 
         }
+
 
 }
